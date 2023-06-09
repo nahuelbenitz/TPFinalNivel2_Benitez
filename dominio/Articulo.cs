@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace dominio
         public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
         public string UrlImagen { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public decimal Precio { get; set; }
         
     }

@@ -20,7 +20,7 @@ namespace negocio
 
             try
             {
-                conexion.ConnectionString = "server=NOT027; database=CATALOGO_DB; integrated security=true";
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
                 comando.CommandText = "select Codigo, Nombre, A.Descripcion Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.IdMarca, A.IdCategoria, A.Id, ImagenUrl, Precio from ARTICULOS A, CATEGORIAS C, MARCAS M where M.Id = A.IdMarca and C.Id = A.IdCategoria";
                 comando.Connection = conexion;
@@ -44,6 +44,8 @@ namespace negocio
                     if (!(lector["ImagenUrl"] is DBNull))
                         aux.UrlImagen = (string)lector["ImagenUrl"];
                     aux.Precio = (decimal)lector["Precio"];
+                    
+
 
                     lista.Add(aux);
                 }
@@ -66,14 +68,15 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("insert into (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (@codigo, @nombre, @descripcion, @idMarca, @idCategoria, @imagenUrl, @precio)");
+                datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (@codigo, @nombre, @descripcion, @idMarca, @idCategoria, @img, @precio)");
                 datos.setearParametro("@codigo", nuevo.Codigo);
                 datos.setearParametro("@nombre", nuevo.Nombre);
                 datos.setearParametro("@descripcion", nuevo.Descripcion);
                 datos.setearParametro("@idMarca", nuevo.Marca.Id);
                 datos.setearParametro("@idCategoria", nuevo.Categoria.Id);
-                datos.setearParametro("@imagenUrl", nuevo.UrlImagen);
+                datos.setearParametro("@img", nuevo.UrlImagen);
                 datos.setearParametro("@precio", nuevo.Precio);
+
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
